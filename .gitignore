@@ -1,0 +1,26 @@
+# Ignore SSL certificates and keys
+/etc/letsencrypt/
+
+/var/lib/letsencrypt/
+/var/log/letsencrypt/
+
+# Ignore temporary and log files
+*.log
+*.tmp
+*.pid
+
+# Ignore Docker-related files and folders
+docker-compose.override.yml
+.env
+Dockerfile.*
+
+# macOS system files
+.DS_Store
+
+# Linux/Unix system files
+.swp
+*~
+
+# IDE-specific files
+.idea/
+.vscode/
