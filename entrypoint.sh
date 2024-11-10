@@ -26,7 +26,7 @@ nginx -s stop || true
 if [ ! -d "/etc/letsencrypt/live/$DOMAIN_NAME" ]; then
     echo "Obtaining SSL certificates for $DOMAIN_NAME and subdomains using standalone mode..."
     certbot certonly --standalone --non-interactive --agree-tos --email $EMAIL \
-        -d $DOMAIN_NAME -d www.$DOMAIN_NAME -d $CLOCK_APP_NAME.$DOMAIN_NAME -d www.$CLOCK_APP_NAME.$DOMAIN_NAME
+        -d $DOMAIN_NAME -d www.$DOMAIN_NAME -d $CLOCK_APP_NAME.$DOMAIN_NAME
 
     # Check if Certbot was successful in creating certificates
     if [ -d "/etc/letsencrypt/live/$DOMAIN_NAME" ]; then
