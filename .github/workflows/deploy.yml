@@ -18,15 +18,15 @@ jobs:
       - name: Deploy to VPS
         run: |
           ssh -o StrictHostKeyChecking=no -p ${{ secrets.VPS_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
-            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/website-proxy:latest
-            docker stop website-proxy || true
-            docker rm website-proxy || true
-            docker run -d -p 80:80 -p 443:443 --name website-proxy --restart unless-stopped \
+            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:latest
+            docker stop ${{ secrets.PROJECT_NAME }} || true
+            docker rm ${{ secrets.PROJECT_NAME }} || true
+            docker run -d -p 80:80 -p 443:443 --name ${{ secrets.PROJECT_NAME }} --restart unless-stopped \
               -e DOMAIN_NAME=${{ secrets.DOMAIN_NAME }} \
               -e EMAIL=${{ secrets.EMAIL }} \
               -e MAIN_APP_PORT=${{ secrets.MAIN_APP_PORT }} \
               -e CLOCK_APP_NAME=${{ secrets.CLOCK_APP_NAME }} \
               -e CLOCK_APP_PORT=${{ secrets.CLOCK_APP_PORT }} \
-              ${{ secrets.DOCKER_HUB_USERNAME }}/website-proxy:latest
+              ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:latest
             docker image prune -f
           EOF
