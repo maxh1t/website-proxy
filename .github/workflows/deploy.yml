@@ -24,6 +24,8 @@ jobs:
               -e MAIN_APP_PORT=${{ secrets.MAIN_APP_PORT }} \
               -e CLOCK_APP_NAME=${{ secrets.CLOCK_APP_NAME }} \
               -e CLOCK_APP_PORT=${{ secrets.CLOCK_APP_PORT }} \
+              -e CLOCK_APP_NAME=${{ secrets.AUTH_FORM_APP_NAME }} \
+              -e CLOCK_APP_PORT=${{ secrets.AUTH_FORM_APP_PORT }} \
               ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:latest
             docker image prune -f
           EOF
