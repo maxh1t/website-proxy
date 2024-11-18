@@ -7,10 +7,12 @@ echo "EMAIL: $EMAIL"
 echo "MAIN_APP_PORT: $MAIN_APP_PORT"
 echo "CLOCK_APP_NAME: $CLOCK_APP_NAME"
 echo "CLOCK_APP_PORT: $CLOCK_APP_PORT"
+echo "AUTH_FORM_APP_NAME: $AUTH_FORM_APP_NAME"
+echo "AUTH_FORM_APP_PORT: $AUTH_FORM_APP_PORT"
 
 # Substitute environment variables in nginx.conf template
 echo "Configuring Nginx with environment variables..."
-envsubst '$DOMAIN_NAME $MAIN_APP_PORT $CLOCK_APP_NAME $CLOCK_APP_PORT' < /etc/nginx/nginx.conf > /tmp/nginx.conf.temp
+envsubst '$DOMAIN_NAME $MAIN_APP_PORT $CLOCK_APP_NAME $CLOCK_APP_PORT $AUTH_FORM_APP_NAME $AUTH_FORM_APP_PORT' < /etc/nginx/nginx.conf > /tmp/nginx.conf.temp
 
 # Move the substituted config file if successful, else exit
 if [[ -f /tmp/nginx.conf.temp ]]; then
@@ -28,7 +30,7 @@ nginx -s stop || true
 if [ ! -d "/etc/letsencrypt/live/$DOMAIN_NAME" ]; then
     echo "SSL certificates not found. Requesting new certificates for $DOMAIN_NAME and subdomains..."
     certbot certonly --standalone --non-interactive --agree-tos --email $EMAIL \
-        -d $DOMAIN_NAME -d www.$DOMAIN_NAME -d $CLOCK_APP_NAME.$DOMAIN_NAME -d www.$CLOCK_APP_NAME.$DOMAIN_NAME
+        -d $DOMAIN_NAME -d www.$DOMAIN_NAME -d $CLOCK_APP_NAME.$DOMAIN_NAME -d www.$CLOCK_APP_NAME.$DOMAIN_NAME -d $AUTH_FORM_APP_NAME.$DOMAIN_NAME -d www.$AUTH_FORM_APP_NAME.$DOMAIN_NAME
 
     # Verify certificate issuance
     if [ -d "/etc/letsencrypt/live/$DOMAIN_NAME" ]; then
